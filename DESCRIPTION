@@ -1,0 +1,22 @@
+Package: twenty48
+Title: Play a Game of 2048 in the Console
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Alexander",
+           family = "Rossell Hayes",
+           role = c("aut", "cre", "cph"),
+           email = "alexander@rossellhayes.com",
+           comment = c(ORCID = "0000-0001-9412-0457"))
+Description: Generates a game of 2048 that can be played in the console.
+    Supports grids of arbitrary sizes, undoing the last move, and resuming a
+    gamethat was exited during the current session.
+License: MIT + file LICENSE
+Depends:
+    R (>= 2.10)
+Imports:
+    crayon,
+    R6
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
