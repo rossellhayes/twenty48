@@ -44,8 +44,6 @@ resume_2048 <- function() {
   ongoing_game()$play()
 }
 
-twenty48_env <- new.env()
-
 ongoing_game <- function() {
   twenty48_env$twenty48_game
 }
@@ -60,7 +58,7 @@ ask_resume <- function() {
 
   response <- substr(readline("> "), 1, 1)
 
-  while (TRUE) {
+  while (interactive()) {
     switch(
       response,
       y = return(TRUE),
