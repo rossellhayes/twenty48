@@ -5,6 +5,7 @@ Twenty48 <- R6::R6Class(
   public = list(
     grid           = NULL,
     score          = 0,
+    game_over      = FALSE,
     initialize = function(size = 4) {
       self$grid <- private$build_grid(size)
       self$play()
@@ -12,16 +13,25 @@ Twenty48 <- R6::R6Class(
     play = function() {
       print(self)
 
-      while (interactive()) {
-        switch(
-          tolower(readline("> ")),
-          w    = private$act("up"),
-          a    = private$act("left"),
-          s    = private$act("down"),
-          d    = private$act("right"),
-          r    = private$back(),
-          quit = {cat("\014"); break}
-        )
+      while (TRUE) {
+        if (self$game_over) {
+          switch(
+            substr(tolower(readline("> ")), 1, 1),
+            r = {self$grid <- private$build_grid(nrow(self$grid))},
+            q = {cat("\014"); break}
+          )
+        } else {
+          switch(
+            tolower(readline("> ")),
+            w       = private$act("up"),
+            a       = private$act("left"),
+            s       = private$act("down"),
+            d       = private$act("right"),
+            z       = private$back(),
+            restart = {self$grid <- private$build_grid(nrow(self$grid))},
+            quit    = {cat("\014"); break}
+          )
+        }
 
         print(self)
       }
@@ -29,18 +39,17 @@ Twenty48 <- R6::R6Class(
     print = function() {
       cat("\014")
 
-      if (!private$game_over) {
+      if (!self$game_over) {
         cat(
           crayon::silver(
-            'Move with WASD.',
-            'Undo a move with "r".',
-            'Type "quit" to exit.\n'
+            'Move with WASD. Undo a move with "z".',
+            '\nType "quit" to exit or "restart" for a new game.\n'
           )
         )
         cat(crayon::silver(paste("Score:", self$score, "\n")))
       } else {
-        cat('Game over. Type "quit" to exit.\n')
-        cat(paste('Score:', self$score))
+        cat('Game over. Type "q" to exit or "r" for a new game.\n')
+        cat(paste('Score:', self$score, "\n"))
       }
 
       grid            <- self$grid
@@ -59,18 +68,19 @@ Twenty48 <- R6::R6Class(
     }
   ),
   private = list(
-    game_over      = FALSE,
     previous_grid  = NULL,
     previous_score = 0,
     new_score = list(up = 0, down = 0, left = 0, right = 0),
     build_grid = function(size) {
-      grid <- matrix(0, nrow = size, ncol = size)
+      self$game_over                   <- FALSE
+      grid                             <- matrix(0, nrow = size, ncol = size)
       grid[sample(seq_along(grid), 2)] <- c(2, sample(c(2, 4), 1))
       grid
     },
     back = function() {
-      self$grid  <- private$previous_grid
-      self$score <- private$previous_score
+      self$grid      <- private$previous_grid
+      self$score     <- private$previous_score
+      self$game_over <- FALSE
       self
     },
     act = function(direction) {
@@ -88,13 +98,13 @@ Twenty48 <- R6::R6Class(
         all(self$grid == moves[["left"]]) &&
         all(self$grid == moves[["right"]])
       ) {
-        private$game_over <- TRUE
+        self$game_over <- TRUE
       } else if (any(self$grid != moves[[direction]])) {
         private$previous_grid  <- self$grid
         private$previous_score <- self$score
-        self$grid              <- moves[[direction]]
         self$score             <- private$new_score[[direction]]
-        self$grid              <- private$spawn(self$grid)
+        self$grid              <- private$spawn(moves[[direction]])
+        self$game_over         <- FALSE
       }
 
       self
@@ -145,8 +155,15 @@ Twenty48 <- R6::R6Class(
       grid
     },
     spawn = function(grid) {
-      grid[sample(which(grid == 0), 1)] <-
-        sample(c(2, 4), 1, prob = c(7/8, 1/8))
+      available <- which(grid == 0)
+
+      if (length(available) > 1) {
+        spawn_space <- sample(available, 1)
+      } else {
+        spawn_space <- available
+      }
+
+      grid[spawn_space] <- sample(c(2, 4), 1, prob = c(7/8, 1/8))
       grid
     },
     rotate = function(grid, rotation = c("0", "cw", "180", "ccw")) {

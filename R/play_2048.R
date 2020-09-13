@@ -1,7 +1,6 @@
 #' Play 2048 in the console
 #'
-#' @param size A vector of one or two integers giving the grid's dimensions.
-#'   If length one, a square grid is generated.
+#' @param size An integer giving the grid's dimensions.
 #'   Defaults to `4`, which generates a 4-by-4 grid.
 #'
 #' @return Generates an interactive game of 2048 in the console.
@@ -12,13 +11,10 @@ play_2048 <- function(size = 4) {
     return(resume_2048())
   }
 
-  if (
-    length(size) < 1 || length(size) > 2 ||
-    !is.numeric(size) || size != size %/% 1
-  ) {
-    stop("`size` must be a vector of one or two integers.", call. = FALSE)
-  } else if (any(size < 2)) {
-    stop("Each dimension of `size` must be at least 2.")
+  if (length(size) != 1 || !is.numeric(size) || size != size %/% 1) {
+    stop("`size` must be a single integer.", call. = FALSE)
+  } else if (size < 2) {
+    stop("`size` must be at least 2.", call. = FALSE)
   }
 
   for (i in seq_len(size ^ 2 + size)) {
@@ -49,7 +45,7 @@ ongoing_game <- function() {
 }
 
 ask_resume <- function() {
-  if (is.null(ongoing_game())) {return(FALSE)}
+  if (is.null(ongoing_game()) || ongoing_game()$game_over) {return(FALSE)}
 
   cat(
     "There is an ongoing game of twenty48.",
@@ -58,7 +54,7 @@ ask_resume <- function() {
 
   response <- substr(readline("> "), 1, 1)
 
-  while (interactive()) {
+  while (TRUE) {
     switch(
       response,
       y = return(TRUE),
