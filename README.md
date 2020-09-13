@@ -8,6 +8,8 @@
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![License:
 MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://cran.r-project.org/web/licenses/MIT)
+[![R build
+status](https://github.com/rossellhayes/twenty48/workflows/R-CMD-check/badge.svg)](https://github.com/rossellhayes/twenty48/actions)
 
 <!-- badges: end -->
 
