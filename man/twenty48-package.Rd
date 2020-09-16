@@ -10,7 +10,7 @@
 
 Generates a game of 2048 that can be played in the
     console.  Supports grids of arbitrary sizes, undoing the last move,
-    and resuming a gamethat was exited during the current session.
+    and resuming a game that was exited during the current session.
 }
 \seealso{
 Useful links:

@@ -9,7 +9,7 @@ Authors@R:
            comment = c(ORCID = "0000-0001-9412-0457"))
 Description: Generates a game of 2048 that can be played in the
     console.  Supports grids of arbitrary sizes, undoing the last move,
-    and resuming a gamethat was exited during the current session.
+    and resuming a game that was exited during the current session.
 License: MIT + file LICENSE
 URL: https://github.com/rossellhayes/twenty48
 BugReports: https://github.com/rossellhayes/twenty48/issues
