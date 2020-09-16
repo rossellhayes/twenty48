@@ -8,6 +8,10 @@
 #'
 #' @return Generates an interactive game of 2048 in the console.
 #' @export
+#' @examples
+#' play_2048()
+#'
+#' resume_2048()
 
 play_2048 <- function(size = 4) {
   if (!is.null(ongoing_game()) && ask_resume()) {

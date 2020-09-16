@@ -20,3 +20,8 @@ Generates an interactive game of 2048 in the console.
 Interact with the game by typing commands into the console and
 pressing enter.
 }
+\examples{
+play_2048()
+
+resume_2048()
+}

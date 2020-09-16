@@ -13,7 +13,7 @@ Twenty48 <- R6::R6Class(
     play = function() {
       print(self)
 
-      while (TRUE) {
+      while (interactive()) {
         if (self$game_over) {
           switch(
             substr(tolower(readline("> ")), 1, 1),
