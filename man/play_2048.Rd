@@ -10,13 +10,13 @@ play_2048(size = 4)
 resume_2048()
 }
 \arguments{
-\item{size}{A vector of one or two integers giving the grid's dimensions.
-If length one, a square grid is generated.
+\item{size}{An integer giving the grid's dimensions.
 Defaults to \code{4}, which generates a 4-by-4 grid.}
 }
 \value{
 Generates an interactive game of 2048 in the console.
 }
 \description{
-Play 2048 in the console
+Interact with the game by typing commands into the console and
+pressing enter.
 }

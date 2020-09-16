@@ -1,5 +1,8 @@
 #' Play 2048 in the console
 #'
+#' Interact with the game by typing commands into the console and
+#' pressing enter.
+#'
 #' @param size An integer giving the grid's dimensions.
 #'   Defaults to `4`, which generates a 4-by-4 grid.
 #'
