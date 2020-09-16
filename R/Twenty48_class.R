@@ -3,11 +3,11 @@ twenty48_env <- new.env()
 Twenty48 <- R6::R6Class(
   "Twenty48",
   public = list(
-    grid           = NULL,
-    score          = 0,
-    game_over      = FALSE,
+    grid       = NULL,
+    score      = 0,
+    game_over  = FALSE,
     initialize = function(size = 4) {
-      self$grid <- private$build_grid(size)
+      private$build_grid(size)
       self$play()
     },
     play = function() {
@@ -17,7 +17,7 @@ Twenty48 <- R6::R6Class(
         if (self$game_over) {
           switch(
             substr(tolower(readline("> ")), 1, 1),
-            r = {self$grid <- private$build_grid(nrow(self$grid))},
+            r = private$restart(),
             q = {cat("\014"); break}
           )
         } else {
@@ -28,7 +28,7 @@ Twenty48 <- R6::R6Class(
             s       = private$act("down"),
             d       = private$act("right"),
             z       = private$back(),
-            restart = {self$grid <- private$build_grid(nrow(self$grid))},
+            restart = private$restart(),
             quit    = {cat("\014"); break}
           )
         }
@@ -48,7 +48,7 @@ Twenty48 <- R6::R6Class(
         )
         cat(crayon::silver(paste("Score:", self$score, "\n")))
       } else {
-        cat('Game over. Type "q" to exit or "r" for a new game.\n')
+        cat('Game over.\nType "q" to exit or "r" for a new game.\n')
         cat(paste('Score:', self$score, "\n"))
       }
 
@@ -70,21 +70,50 @@ Twenty48 <- R6::R6Class(
   private = list(
     previous_grid  = NULL,
     previous_score = 0,
-    new_score = list(up = 0, down = 0, left = 0, right = 0),
+    new_score      = list(up = 0, down = 0, left = 0, right = 0),
+    moves          = list(up = 0, down = 0, left = 0, right = 0),
+    previous_moves = list(up = 0, down = 0, left = 0, right = 0),
     build_grid = function(size) {
-      self$game_over                   <- FALSE
-      grid                             <- matrix(0, nrow = size, ncol = size)
-      grid[sample(seq_along(grid), 2)] <- c(2, sample(c(2, 4), 1))
-      grid
+      self$game_over <- FALSE
+      self$grid      <- matrix(0, nrow = size, ncol = size)
+      self$grid[sample(seq_along(self$grid), 2)] <- c(2, sample(c(2, 4), 1))
+
+      private$moves <- list(
+        up    = private$move(self$grid, "up"),
+        down  = private$move(self$grid, "down"),
+        left  = private$move(self$grid, "left"),
+        right = private$move(self$grid, "right")
+      )
     },
     back = function() {
       self$grid      <- private$previous_grid
       self$score     <- private$previous_score
+      private$moves  <- private$previous_moves
       self$game_over <- FALSE
       self
     },
+    restart = function() {
+      private$previous_grid  <- self$grid
+      private$previous_score <- self$score
+      private$previous_moves <- private$moves
+      self$score             <- 0
+      self$game_over         <- FALSE
+
+      private$build_grid(nrow(self$grid))
+
+      self
+    },
     act = function(direction) {
-      moves <- list(
+      if (all(self$grid == private$moves[[direction]])) {return(self)}
+
+      private$previous_grid  <- self$grid
+      private$previous_score <- self$score
+      private$previous_moves <- private$moves
+      self$score             <- private$new_score[[direction]]
+      self$grid              <- private$spawn(private$moves[[direction]])
+      self$game_over         <- FALSE
+
+      private$moves <- list(
         up    = private$move(self$grid, "up"),
         down  = private$move(self$grid, "down"),
         left  = private$move(self$grid, "left"),
@@ -92,19 +121,13 @@ Twenty48 <- R6::R6Class(
       )
 
       if (
-        all(self$grid != 0)               &&
-        all(self$grid == moves[["up"]])   &&
-        all(self$grid == moves[["down"]]) &&
-        all(self$grid == moves[["left"]]) &&
-        all(self$grid == moves[["right"]])
+        all(self$grid != 0)                       &&
+        all(self$grid == private$moves[["up"]])   &&
+        all(self$grid == private$moves[["down"]]) &&
+        all(self$grid == private$moves[["left"]]) &&
+        all(self$grid == private$moves[["right"]])
       ) {
         self$game_over <- TRUE
-      } else if (any(self$grid != moves[[direction]])) {
-        private$previous_grid  <- self$grid
-        private$previous_score <- self$score
-        self$score             <- private$new_score[[direction]]
-        self$grid              <- private$spawn(moves[[direction]])
-        self$game_over         <- FALSE
       }
 
       self
