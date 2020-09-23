@@ -19,7 +19,7 @@ library(badger)
 # twenty48 <img src="man/figures/logo.png?raw=TRUE" align="right" height="138" />
 
 <!-- badges: start -->
-`r # badge_cran_release(color = "brightgreen")`
+`r badge_cran_release(color = "brightgreen")`
 `r badge_lifecycle("experimental")`
 `r badge_license(color = "blueviolet")`
 `r badge_github_actions(action = "R-CMD-check")`
@@ -31,13 +31,13 @@ A clone of [Gabriele Cirulli's 2048](https://github.com/gabrielecirulli/2048) in
 
 ## Installation
 
-<!-- You can install the released version of **twenty48** from [CRAN](https://cran.r-project.org/package=twenty48) with: -->
+You can install the released version of **twenty48** from [CRAN](https://cran.r-project.org/package=twenty48) with:
 
-<!-- ``` {r eval = FALSE} -->
-<!-- install.packages("twenty48") -->
-<!-- ``` -->
+``` {r eval = FALSE}
+install.packages("twenty48")
+```
 
-You can install the development version of **twenty48** from [GitHub](https://github.com/rossellhayes/twenty48) with:
+or the development version from [GitHub](https://github.com/rossellhayes/twenty48) with:
 
 ``` {r eval = FALSE}
 # install.packages("remotes")

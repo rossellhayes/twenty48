@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![](https://www.r-pkg.org/badges/version/twenty48?color=brightgreen)](https://cran.r-project.org/package=twenty48)
 [![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![License:
 MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://cran.r-project.org/web/licenses/MIT)
@@ -18,15 +19,14 @@ Cirulli’s 2048](https://github.com/gabrielecirulli/2048) in R.
 
 ## Installation
 
-<!-- You can install the released version of **twenty48** from [CRAN](https://cran.r-project.org/package=twenty48) with: -->
+You can install the released version of **twenty48** from
+[CRAN](https://cran.r-project.org/package=twenty48) with:
 
-<!-- ``` {r eval = FALSE} -->
+``` r
+install.packages("twenty48")
+```
 
-<!-- install.packages("twenty48") -->
-
-<!-- ``` -->
-
-You can install the development version of **twenty48** from
+or the development version from
 [GitHub](https://github.com/rossellhayes/twenty48) with:
 
 ``` r
