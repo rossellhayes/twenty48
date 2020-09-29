@@ -1,6 +1,8 @@
 twenty48_env <- new.env()
 
-Twenty48 <- R6::R6Class(
+#' @importFrom R6 R6Class
+
+Twenty48 <- R6Class(
   "Twenty48",
   public = list(
     grid       = NULL,
