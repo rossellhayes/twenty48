@@ -36,7 +36,7 @@ remotes::install_github("rossellhayes/twenty48")
 
 ## Example
 
-![Gameplay recording](man/figures/recording.gif)
+![Gameplay recording](man/figures/recording_dynamic.gif)
 
 ------------------------------------------------------------------------
 
