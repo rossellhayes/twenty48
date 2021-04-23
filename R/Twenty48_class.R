@@ -3,11 +3,11 @@
 Twenty48 <- R6Class(
   "Twenty48",
   public = list(
-    grid       = NULL,
-    score      = 0,
-    game_over  = FALSE,
-    dynamic    = FALSE,
-    wait       = FALSE,
+    grid      = NULL,
+    score     = 0,
+    game_over = FALSE,
+    dynamic   = FALSE,
+    wait      = FALSE,
 
     initialize = function(size = 4, dynamic = TRUE) {
       self$set_dynamic(dynamic)
@@ -16,7 +16,7 @@ Twenty48 <- R6Class(
     },
 
     set_dynamic = function(dynamic) {
-      self$dynamic <- dynamic
+      self$dynamic <- dynamic && rstudioapi::isAvailable()
     },
 
     play = function() {

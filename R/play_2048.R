@@ -24,8 +24,14 @@ ongoing_game <- function() {
 #' play_2048()
 #' play_2048(size = 5)
 
-play_2048 <- function(size = 4, dynamic = rstudioapi::isAvailable()) {
+play_2048 <- function(size = 4, dynamic = TRUE) {
   if (!interactive()) {return(invisible(NULL))}
+
+  if (rstudioapi::isAvailable()) {
+    old <- rstudioapi::readRStudioPreference("console_code_completion", TRUE)
+    on.exit(rstudioapi::writeRStudioPreference("console_code_completion", old))
+    rstudioapi::writeRStudioPreference("console_code_completion", FALSE)
+  }
 
   if (!is.null(ongoing_game) && ask_resume()) {
     ongoing_game()$set_dynamic(dynamic)
@@ -92,21 +98,15 @@ quit_game <- function() {
 }
 
 input <- function(prompt = "> ", dynamic = FALSE, valid = NULL) {
-  if (rstudioapi::isAvailable()) {
-    if (dynamic) {
-      while (TRUE) {
-        input <- tolower(rstudioapi::getConsoleEditorContext()$contents)
-        if (input %in% valid || is.null(valid) && input != "") {
-          rstudioapi::sendToConsole("", execute = FALSE)
-          return(input)
-        }
-        Sys.sleep(1/60)
+  if (dynamic) {
+    while (TRUE) {
+      input <- tolower(rstudioapi::getConsoleEditorContext()$contents)
+      if (input %in% valid || is.null(valid) && input != "") {
+        rstudioapi::sendToConsole("", execute = FALSE)
+        return(input)
       }
+      Sys.sleep(1/60)
     }
-
-    old <- rstudioapi::readRStudioPreference("console_code_completion", TRUE)
-    on.exit(rstudioapi::writeRStudioPreference("console_code_completion", old))
-    rstudioapi::writeRStudioPreference("console_code_completion", FALSE)
   }
 
   tolower(readline(prompt = prompt))
