@@ -1,3 +1,9 @@
+game_env <- new.env()
+
+ongoing_game <- function() {
+  game_env[["2048"]]
+}
+
 #' Play 2048 in the console
 #'
 #' Interact with the game by typing commands into the console and
@@ -7,14 +13,19 @@
 #'   Defaults to `4`, which generates a 4-by-4 grid.
 #'
 #' @return Generates an interactive game of 2048 in the console.
+#' @aliases 2048 twenty48
 #' @export
+#' @importFrom R6 R6Class
+#'
 #' @examples
 #' play_2048()
-#'
-#' resume_2048()
+#' play_2048(size = 5)
 
-play_2048 <- function(size = 4) {
-  if (!is.null(ongoing_game()) && ask_resume()) {
+play_2048 <- function(size = 4, dynamic = rstudioapi::isAvailable()) {
+  if (!interactive()) {return(invisible(NULL))}
+
+  if (!is.null(ongoing_game) && ask_resume()) {
+    ongoing_game()$set_dynamic(dynamic)
     return(resume_2048())
   }
 
@@ -24,7 +35,7 @@ play_2048 <- function(size = 4) {
     stop("`size` must be at least 2.", call. = FALSE)
   }
 
-  for (i in seq_len(size ^ 2 + size)) {
+  for (i in seq_along(bg)) {
     do.call(
       crayon::make_style, c(as.list(bg[i]), list(bg = TRUE, colors = 256))
     )
@@ -33,7 +44,8 @@ play_2048 <- function(size = 4) {
     )
   }
 
-  twenty48_env$twenty48_game <- Twenty48$new(size)
+  game_env[["2048"]] <- Twenty48$new(size, dynamic)
+  game_env[["2048"]]$play()
 }
 
 #' @rdname play_2048
@@ -47,10 +59,6 @@ resume_2048 <- function() {
   ongoing_game()$play()
 }
 
-ongoing_game <- function() {
-  twenty48_env$twenty48_game
-}
-
 ask_resume <- function() {
   if (is.null(ongoing_game()) || ongoing_game()$game_over) {return(FALSE)}
 
@@ -59,7 +67,7 @@ ask_resume <- function() {
     "Do you want to resume? (y/n)"
   )
 
-  response <- substr(readline("> "), 1, 1)
+  response <- substr(input("> "), 1, 1)
 
   while (TRUE) {
     switch(
@@ -73,5 +81,30 @@ ask_resume <- function() {
 
 invalid_response <- function() {
   cat('I didn\'t understand that input. Please type "y" or "n" or press ESC.')
-  substr(readline("> "), 1, 1)
+  substr(input("> "), 1, 1)
+}
+
+quit_game <- function() {
+  do.call(return, list(cat("\014")), envir = sys.frame(-1))
+}
+
+input <- function(prompt = "> ", dynamic = FALSE, valid = NULL) {
+  if (rstudioapi::isAvailable()) {
+    if (dynamic) {
+      while (TRUE) {
+        input <- tolower(rstudioapi::getConsoleEditorContext()$contents)
+        if (input %in% valid || is.null(valid) && input != "") {
+          rstudioapi::sendToConsole("", execute = FALSE)
+          return(input)
+        }
+        Sys.sleep(1/60)
+      }
+    }
+
+    old <- rstudioapi::readRStudioPreference("console_code_completion", TRUE)
+    on.exit(rstudioapi::writeRStudioPreference("console_code_completion", old))
+    rstudioapi::writeRStudioPreference("console_code_completion", FALSE)
+  }
+
+  tolower(readline(prompt = prompt))
 }
