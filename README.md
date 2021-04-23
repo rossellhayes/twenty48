@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![](https://www.r-pkg.org/badges/version/twenty48?color=brightgreen)](https://cran.r-project.org/package=twenty48)
-[![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![License:
 MIT](https://img.shields.io/badge/license-MIT-blueviolet.svg)](https://cran.r-project.org/web/licenses/MIT)
 [![R build
@@ -14,8 +14,8 @@ status](https://github.com/rossellhayes/twenty48/workflows/R-CMD-check/badge.svg
 
 <!-- badges: end -->
 
-A clone of [Gabriele
-Cirulli’s 2048](https://github.com/gabrielecirulli/2048) in R.
+A clone of [Gabriele Cirulli’s
+2048](https://github.com/gabrielecirulli/2048) in R.
 
 ## Installation
 
@@ -38,7 +38,7 @@ remotes::install_github("rossellhayes/twenty48")
 
 ![Gameplay recording](man/figures/recording.gif)
 
------
+------------------------------------------------------------------------
 
 Hex sticker font is [Source Sans
 Pro](https://github.com/adobe-fonts/source-sans-pro) by
