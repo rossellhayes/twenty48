@@ -1,4 +1,5 @@
 #' @keywords internal
+#' @aliases twenty48-package
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage

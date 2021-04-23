@@ -2,8 +2,8 @@
 % Please edit documentation in R/twenty48-package.R
 \docType{package}
 \name{twenty48-package}
-\alias{twenty48}
 \alias{twenty48-package}
+\alias{_PACKAGE}
 \title{twenty48: Play a Game of 2048 in the Console}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
