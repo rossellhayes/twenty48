@@ -30,8 +30,8 @@ or the development version from
 [GitHub](https://github.com/rossellhayes/twenty48) with:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("rossellhayes/twenty48")
+# install.packages("pak")
+pak::pkg_install("rossellhayes/twenty48")
 ```
 
 ## Example
