@@ -112,10 +112,6 @@ input <- function(prompt = "> ", dynamic = FALSE, valid = NULL) {
   tolower(readline(prompt = prompt))
 }
 
-blank <- " "
-class(blank) <- "blank"
-print.blank <- function(x) {}
-
 clear_console <- function() {
   if (.Platform$OS.type == "windows") {shell("cls")} else {shell("clear")}
   return(invisible(NULL))
