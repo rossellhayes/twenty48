@@ -16,7 +16,12 @@ Twenty48 <- R6Class(
     },
 
     set_dynamic = function(dynamic) {
-      self$dynamic <- dynamic && rstudioapi::isAvailable()
+      if (dynamic && rstudioapi::isAvailable()) {
+        warning("Dynamic input is only supported in RStudio.", call. = FALSE)
+        self$dynamic <- FALSE
+      }
+
+      self$dynamic <- dynamic
     },
 
     play = function() {

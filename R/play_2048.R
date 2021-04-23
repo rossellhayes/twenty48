@@ -24,7 +24,7 @@ ongoing_game <- function() {
 #' play_2048()
 #' play_2048(size = 5)
 
-play_2048 <- function(size = 4, dynamic = TRUE) {
+play_2048 <- function(size = 4, dynamic = rstudioapi::isAvailable()) {
   if (!interactive()) {return(invisible(NULL))}
 
   if (rstudioapi::isAvailable()) {
