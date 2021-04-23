@@ -16,7 +16,7 @@ Twenty48 <- R6Class(
     },
 
     set_dynamic = function(dynamic) {
-      if (dynamic && rstudioapi::isAvailable()) {
+      if (dynamic && !rstudioapi::isAvailable()) {
         warning("Dynamic input is only supported in RStudio.", call. = FALSE)
         self$dynamic <- FALSE
       }
@@ -55,7 +55,7 @@ Twenty48 <- R6Class(
     },
 
     print = function() {
-      cat("\014")
+      clear_console()
 
       if (!self$game_over) {
         cat(
