@@ -2,16 +2,22 @@
 % Please edit documentation in R/play_2048.R
 \name{play_2048}
 \alias{play_2048}
+\alias{2048}
+\alias{twenty48}
 \alias{resume_2048}
 \title{Play 2048 in the console}
 \usage{
-play_2048(size = 4)
+play_2048(size = 4, dynamic = rstudioapi::isAvailable())
 
 resume_2048()
 }
 \arguments{
 \item{size}{An integer giving the grid's dimensions.
 Defaults to \code{4}, which generates a 4-by-4 grid.}
+
+\item{dynamic}{If \code{dynamic} is \code{TRUE}, commands can be input without pressing
+enter, creating a more seamless game experience.
+Note that \code{dynamic} commands currently only work in RStudio.}
 }
 \value{
 Generates an interactive game of 2048 in the console.
@@ -22,6 +28,5 @@ pressing enter.
 }
 \examples{
 play_2048()
-
-resume_2048()
+play_2048(size = 5)
 }

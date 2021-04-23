@@ -11,6 +11,9 @@ ongoing_game <- function() {
 #'
 #' @param size An integer giving the grid's dimensions.
 #'   Defaults to `4`, which generates a 4-by-4 grid.
+#' @param dynamic If `dynamic` is `TRUE`, commands can be input without pressing
+#'   enter, creating a more seamless game experience.
+#'   Note that `dynamic` commands currently only work in RStudio.
 #'
 #' @return Generates an interactive game of 2048 in the console.
 #' @aliases 2048 twenty48
