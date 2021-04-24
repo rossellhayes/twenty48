@@ -40,13 +40,11 @@ pak::pkg_install("rossellhayes/twenty48")
 
 ------------------------------------------------------------------------
 
-Hex sticker font is [Source Sans
-Pro](https://github.com/adobe-fonts/source-sans-pro) by
-[Adobe](https://www.adobe.com).
+Hex sticker font is [Source Sans by
+Adobe](https://github.com/adobe-fonts/source-sans).
 
-Recording made with
-[ScreenToGif](https://github.com/NickeManarin/ScreenToGif/) by [Nicke
-Manarin](https://github.com/NickeManarin).
+Recording made with [ScreenToGif by Nicke
+Manarin](https://github.com/NickeManarin/ScreenToGif/).
 
 Please note that **twenty48** is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
