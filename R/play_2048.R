@@ -94,7 +94,7 @@ invalid_response <- function() {
 }
 
 quit_game <- function() {
-  do.call(return, list(clear_console()), envir = sys.frame(-1))
+  do.call("return", list(clear_console()), envir = sys.frame(-1))
 }
 
 input <- function(prompt = "> ", dynamic = FALSE, valid = NULL) {
