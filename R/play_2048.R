@@ -40,6 +40,8 @@ play_2048 <- function(size = 4, dynamic = rstudioapi::isAvailable()) {
 
   if (length(size) != 1 || !is.numeric(size) || size != size %/% 1) {
     stop("`size` must be a single integer.", call. = FALSE)
+  } else if (is.na(size)) {
+    stop("`size` must not be `NA`.", call. = FALSE)
   } else if (size < 2) {
     stop("`size` must be at least 2.", call. = FALSE)
   }
