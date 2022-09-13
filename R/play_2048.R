@@ -113,6 +113,11 @@ input <- function(prompt = "> ", dynamic = FALSE, valid = NULL) {
 }
 
 clear_console <- function() {
-  if (.Platform$OS.type == "windows") {shell("cls")} else {shell("clear")}
-  return(invisible(NULL))
+  if (rstudioapi::isAvailable()) {
+    # Within the RStudio console, "\f" clears output
+    return(cat("\f"))
+  }
+
+  # In the terminal, "\033c\033[3J" clears output
+  cat("\033c\033[3J")
 }
