@@ -1,4 +1,4 @@
-# twenty48 (development version)
+# twenty48 0.2.1
 
 * Fix code that clears the screen between moves so that it works correctly on Mac.
 * Include precomputed `crayon` styles so they don't have to be generated before each game.
