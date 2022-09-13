@@ -18,7 +18,6 @@ ongoing_game <- function() {
 #' @return Generates an interactive game of 2048 in the console.
 #' @aliases 2048 twenty48
 #' @export
-#' @importFrom R6 R6Class
 #'
 #' @examples
 #' play_2048()

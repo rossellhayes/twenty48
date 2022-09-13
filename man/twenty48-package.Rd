@@ -6,11 +6,9 @@
 \alias{_PACKAGE}
 \title{twenty48: Play a Game of 2048 in the Console}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Generates a game of 2048 that can be played in the
-    console.  Supports grids of arbitrary sizes, undoing the last move,
-    and resuming a game that was exited during the current session.
+Generates a game of 2048 that can be played in the console. Supports grids of arbitrary sizes, undoing the last move, and resuming a game that was exited during the current session.
 }
 \seealso{
 Useful links:

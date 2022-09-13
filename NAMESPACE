@@ -3,3 +3,5 @@
 export(play_2048)
 export(resume_2048)
 importFrom(R6,R6Class)
+importFrom(crayon,make_style)
+importFrom(crayon,silver)
