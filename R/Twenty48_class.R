@@ -12,6 +12,10 @@ Twenty48 <- R6Class(
     initialize = function(size = 4, dynamic = TRUE) {
       self$set_dynamic(dynamic)
       self$wait <- isTRUE(requireNamespace("wait", quietly = TRUE))
+
+      private$bg_styles <- bg_styles
+      private$fg_styles <- fg_styles
+
       private$build_grid(size)
     },
 
@@ -76,11 +80,14 @@ Twenty48 <- R6Class(
       grid[]          <- format(
         grid, width = max(6, max(nchar(grid))), justify = "centre"
       )
-      grid[]          <- sapply(
+
+      grid[] <- sapply(
         grid,
         function(x) {
           num <- gsub(" ", "", x)
-          crayon::style(x, as = paste0(num, "_fg"), bg = num)
+          bg_style <- private$bg_styles[[num]]
+          fg_style <- private$fg_styles[[num]]
+          bg_style(fg_style(x))
         }
       )
 
@@ -93,6 +100,8 @@ Twenty48 <- R6Class(
   ),
 
   private = list(
+    bg_styles      = NULL,
+    fg_styles      = NULL,
     previous_grid  = NULL,
     previous_score = 0,
     new_score      = list(up = 0, down = 0, left = 0, right = 0),

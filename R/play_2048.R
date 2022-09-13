@@ -44,15 +44,6 @@ play_2048 <- function(size = 4, dynamic = rstudioapi::isAvailable()) {
     stop("`size` must be at least 2.", call. = FALSE)
   }
 
-  for (i in seq_along(bg)) {
-    do.call(
-      crayon::make_style, c(as.list(bg[i]), list(bg = TRUE, colors = 256))
-    )
-    do.call(
-      crayon::make_style, c(as.list(fg[i]), list(grey = TRUE, colors = 256))
-    )
-  }
-
   game_env[["2048"]] <- Twenty48$new(size, dynamic)
   game_env[["2048"]]$play()
 }

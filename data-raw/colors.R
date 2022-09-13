@@ -1,5 +1,7 @@
+library(crayon)
 library(dplyr)
-library(magrittr)
+library(purrr)
+library(usethis)
 
 scipen <- options(scipen = 1000)
 
@@ -20,7 +22,7 @@ colors <- expand.grid(r = 0:5, g = 0:5, b = 0:5) %>%
   arrange(too_b, too_g, too_r, desc(sum), geom_mean, desc(r), desc(g)) %>%
   bind_rows(tibble(r = 15, g = 15, b = 15, sum = 45, fg = "#111111"), .)
 
-bg <- colors[c("r", "g", "b")] %>%
+bg_styles <- colors[c("r", "g", "b")] %>%
   as.matrix() %>%
   as.raw() %>%
   as.character() %>%
@@ -28,16 +30,17 @@ bg <- colors[c("r", "g", "b")] %>%
   paste0(., .) %>%
   matrix(ncol = 3) %>%
   apply(1, paste0, collapse = "") %>%
-  paste0("#", .)
+  paste0("#", .) %>%
+  purrr::map(crayon::make_style, bg = TRUE)
 
-names(bg)      <- as.character(2 ^ (seq_along(bg) - 1))
-names(bg)[[1]] <- "."
-names(bg)[[2]] <- "4"
-names(bg)[[3]] <- "2"
+names(bg_styles)      <- as.character(2 ^ (seq_along(bg_styles) - 1))
+names(bg_styles)[[1]] <- "."
+names(bg_styles)[[2]] <- "4"
+names(bg_styles)[[3]] <- "2"
 
-fg        <- colors[["fg"]]
-names(fg) <- paste0(names(bg), "_fg")
+fg_styles        <- purrr::map(colors[["fg"]], crayon::make_style)
+names(fg_styles) <- names(bg_styles)
 
 options(scipen)
 
-usethis::use_data(bg, fg, internal = TRUE, overwrite = TRUE)
+usethis::use_data(bg_styles, fg_styles, internal = TRUE, overwrite = TRUE)
